@@ -23,7 +23,8 @@ namespace getLocateMap
             var map_url = $@"{AppDomain.CurrentDomain.BaseDirectory}api.html";
             string strHtml = File.ReadAllText(map_url);
             Debug.WriteLine(strHtml);
-            browser.LoadHtml(strHtml, "http://www.team-one.com/");
+            string htmlRoadView = $@"https://map.kakao.com/?panoid=1042459733&pan=176.0&zoom=0&map_type=TYPE_MAP&map_attribute=ROADVIEW&urlX=523869.0&urlY=1084106.0";
+            browser.LoadHtml(htmlRoadView, "http://www.team-one.com/");
         }
     }
 }
