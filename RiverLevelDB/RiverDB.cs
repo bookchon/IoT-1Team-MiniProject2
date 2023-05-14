@@ -36,7 +36,9 @@ namespace RiverLevelDB
             JObject jobject = JObject.Parse(results);
             var riveritem = jobject["getRvrwtLevelInfo"]["body"]["items"]["item"];
 
-            MySqlConnection conn = new MySqlConnection("Server=210.119.12.66;Port=3306;Database=miniproject01;Uid=root;Pwd=12345;");
+            //MySqlConnection conn = new MySqlConnection("Server=210.119.12.66;Port=3306;Database=miniproject01;Uid=root;Pwd=12345;");
+
+            MySqlConnection conn = new MySqlConnection("Server=pknuiot1team.cghin4qcf4s7.ap-northeast-2.rds.amazonaws.com;Port=3306;Database=parkseonghyeon;Uid=pknuiot1team;Pwd=2V3lhihd8gIQ3krjNMf2;");
 
             foreach (var item in riveritem)
             {
@@ -92,6 +94,8 @@ namespace RiverLevelDB
                 cmd.Parameters.AddWithValue("@sttusNm", Convert.ToString(item["sttusNm"]));
 
                 cmd.ExecuteNonQuery();
+
+                Debug.WriteLine("완료");
             }
 
 
