@@ -14,7 +14,7 @@ namespace Forecast_API
         {
             RequestForecastWebApi forecastApiInfo = new RequestForecastWebApi();
             PushDB pushDB = new PushDB();
-            pushDB.insertDB(forecastApiInfo.GetForecastWebApi());
+            pushDB.InsertDB(forecastApiInfo.GetForecastWebApi());
         }
     }
 }

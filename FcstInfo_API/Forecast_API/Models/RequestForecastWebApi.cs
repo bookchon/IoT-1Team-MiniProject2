@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Forecast_API.Models
 {
+    // API 요청
     public class RequestForecastWebApi
     {
         string ServiceUrl { get; set; }
@@ -37,6 +38,7 @@ namespace Forecast_API.Models
                         + "&ny=76";
         }
         
+        // 생성 날짜, 시간 세팅
         public void SetBaseDateTime()
         {
             BaseDate = DateTime.Now.ToString("yyyyMMdd");   // 현재 날짜
@@ -56,34 +58,35 @@ namespace Forecast_API.Models
             Debug.WriteLine(BaseDate, BaseTime);
         }
 
+
+        // API 데이터 받은 후 우리가 쓸(DB에 알맞는)형태로 데이터 얻기
         public List<ForecastInfo> GetForecastWebApi()
         {
-            string result = string.Empty;
             List<ForecastInfo> transformedData = null;
 
             //WebRequst, WebRespone 객체
             WebRequest req = null;
             WebResponse res = null;
             StreamReader reader = null;
+            string result = string.Empty;   // API 응답 결과
 
             // API 요청, 응답
             try
             {
                 req = WebRequest.Create(RequestUrl);
-                res =  req.GetResponse();
-                reader = new StreamReader(res.GetResponseStream());
-                result = reader.ReadToEnd();
-
-                Debug.Write(result);
+                using (res = req.GetResponse())
+                {
+                    using (reader = new StreamReader(res.GetResponseStream()))
+                    {
+                        result = reader.ReadToEnd();
+                        Debug.Write(result);
+                    }
+                }
+               
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"API 조회 오류 : {ex.Message}");
-            }
-            finally
-            {
-                reader.Close();
-                res.Close();
             }
             
             ResponseForecastWebApi responseResult = JsonConvert.DeserializeObject<ResponseForecastWebApi>(result);
@@ -96,10 +99,10 @@ namespace Forecast_API.Models
                         .GroupBy(d => new { d.BaseDate, d.BaseTime, d.FcstDate, d.FcstTime, d.Nx, d.Ny })
                         .Select(group => new ForecastInfo
                         {
-                            BaseDate = DateTime.ParseExact(group.Key.BaseDate, "yyyyMMdd", CultureInfo.InvariantCulture),
-                            BaseTime = DateTime.ParseExact(group.Key.BaseTime, "HHmm", CultureInfo.InvariantCulture),
                             FcstDate = DateTime.ParseExact(group.Key.FcstDate, "yyyyMMdd", CultureInfo.InvariantCulture),
                             FcstTime = DateTime.ParseExact(group.Key.FcstTime, "HHmm", CultureInfo.InvariantCulture),
+                            BaseDate = DateTime.ParseExact(group.Key.BaseDate, "yyyyMMdd", CultureInfo.InvariantCulture),
+                            BaseTime = DateTime.ParseExact(group.Key.BaseTime, "HHmm", CultureInfo.InvariantCulture),
                             Nx = int.Parse(group.Key.Nx),
                             Ny = int.Parse(group.Key.Ny),
                             T1H = int.Parse(group.FirstOrDefault(item => item.Category == "T1H")?.FcstValue),

@@ -13,10 +13,10 @@ namespace Forecast_API.Models
 {
     public class ForecastInfo
     {
-        public DateTime BaseDate { get; set; }  // 생성 날짜
-        public DateTime BaseTime { get; set; }  // 생성 시간
         public DateTime FcstDate { get; set; } // 예보 날짜
         public DateTime FcstTime { get; set; }    // 예보 시간
+        public DateTime BaseDate { get; set; }  // 생성 날짜
+        public DateTime BaseTime { get; set; }  // 생성 시간
         public int Nx { get; set; }
         public int Ny { get; set; }
         public int T1H { get; set; }    // 기온

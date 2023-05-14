@@ -11,15 +11,37 @@ namespace Forecast_API.Models
 {
     public class PushDB
     {
-        public void insertDB(List<ForecastInfo> forecastInfos)
+        public void TruncateDB() 
         {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Commons.myConnString))
+                {
+                    if (conn.State == ConnectionState.Closed) conn.Open();
+                    {
+                        var truncate_query = "truncate ultrasrtfcst";
+                        MySqlCommand cmd = new MySqlCommand(truncate_query, conn);
+                        cmd.ExecuteNonQuery();
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"DB초기화 오류: {ex.ToString()}");
+
+            }
+        }
+
+        public void InsertDB(List<ForecastInfo> forecastInfos)
+        {
+            TruncateDB();
             try 
             {
                 using(MySqlConnection conn = new MySqlConnection(Commons.myConnString))
                 {
                     if (conn.State == ConnectionState.Closed) conn.Open();
-
-                    var query = @"INSERT INTO ultrasrtfcst
+     
+                    var insert_query = @"INSERT INTO ultrasrtfcst
                                         (FcstDate,
                                         FcstTime,
                                         BaseDate,
@@ -56,11 +78,11 @@ namespace Forecast_API.Models
 
                     foreach (ForecastInfo info in forecastInfos)
                     {
-                        MySqlCommand cmd = new MySqlCommand(query, conn);
+                        MySqlCommand cmd = new MySqlCommand(insert_query, conn);
                         cmd.Parameters.AddWithValue("@FcstDate", info.FcstDate);
                         cmd.Parameters.AddWithValue("@FcstTime", info.FcstTime);
-                        cmd.Parameters.AddWithValue("@BaseDate", info.FcstDate);
-                        cmd.Parameters.AddWithValue("@BaseTime", info.FcstTime);
+                        cmd.Parameters.AddWithValue("@BaseDate", info.BaseDate);
+                        cmd.Parameters.AddWithValue("@BaseTime", info.BaseTime);
                         cmd.Parameters.AddWithValue("@Nx", info.Nx);
                         cmd.Parameters.AddWithValue("@Ny", info.Ny);
                         cmd.Parameters.AddWithValue("@T1H", info.T1H);

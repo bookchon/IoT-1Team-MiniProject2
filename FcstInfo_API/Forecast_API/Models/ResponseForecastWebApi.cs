@@ -2,7 +2,7 @@
 
 namespace Forecast_API.Models
 {
-    // 응답
+    // API 응답
     public class ResponseForecastWebApi
     {
         public ResponseForecastSpaceData Response { get; set; }
