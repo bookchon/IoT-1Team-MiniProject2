@@ -12,6 +12,7 @@ namespace RiverLevelUI
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
+        #region <여기서부터 복사>
         public MainWindow()
         {
             InitializeComponent();
@@ -72,5 +73,8 @@ namespace RiverLevelUI
             rdr.Close();
             conn.Close();
         }
+
     }
+
+    #endregion
 }
