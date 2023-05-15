@@ -34,6 +34,8 @@ namespace Temp
         
         public  string SkyCondition {get;set;}
         public string T1H { get;set;}
+        public string BaseDate { get;set;}
+        public string BaseTime { get;set;}
 
         private async void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -44,18 +46,22 @@ namespace Temp
                     if (conn.State == ConnectionState.Closed) conn.Open();
 
                     var query = @"SELECT 
+	                                                DATE_FORMAT(BaseDate, '%Y-%m-%d') as BaseDate,
+	                                                BaseTime,
 	                                                T1H,
-                                                    SkyCondition 
-                                                 FROM ultrasrtfcst 
-                                                  JOIN SKY
+	                                                SkyCondition
+                                                  FROM ultrasrtfcst 
+                                                 JOIN SKY
                                                   ON ultrasrtfcst.sky = sky.code
-                                                 WHERE ultrasrtfcst.Idx=5";
+                                                  WHERE ultrasrtfcst.Idx=1";
 
                     var cmd = new MySqlCommand(query, conn);
                     MySqlDataReader reader = cmd.ExecuteReader();
 
                     if (reader.Read()) 
                     {
+                        BaseDate = reader.GetString("BaseDate");
+                        BaseTime = reader.GetString("BaseTime");
                         T1H = reader.GetString("T1H");
                         SkyCondition = reader.GetString("SkyCondition");
                     }
@@ -69,6 +75,7 @@ namespace Temp
 
             LblSkyCon.Content = SkyCondition;
             LblTemp.Content = T1H;
+            LblUpdateTime.Content = BaseDate + " "+ BaseTime;
             
             switch (SkyCondition)
             {

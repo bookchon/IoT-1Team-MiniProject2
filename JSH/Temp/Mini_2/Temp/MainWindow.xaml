@@ -33,6 +33,10 @@
                     <iconPacks:PackIconFontisto x:Name="iconsky" Kind="DayCloudy"  Foreground="SteelBlue" Height="80" Width="95" Margin="10" VerticalAlignment="Center"  />
                 </Grid>
                 <Label x:Name="LblSkyCon" Grid.Row="0" Grid.Column="1" Content="하늘 상태" FontSize="20"  VerticalAlignment="Bottom"/>
+                <Label x:Name="LblUpdateTime" Grid.Row="0" Grid.Column="1" Content="업데이트 시간" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,15,0"/>
+                <StackPanel Grid.Row="0" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5.5">
+                    <iconPacks:PackIconMaterialDesign Kind="AccessTime" Height="13" Width="13"/>
+                </StackPanel>
                 <StackPanel  x:Name="StbTemp" Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <iconPacks:PackIconUnicons Kind="TemperatureHalf" Foreground="Red"  VerticalAlignment="Center"  Height="28" Width="20"/>
                     <Label x:Name="LblTemp" Content="23" FontSize="30"   FontWeight="Bold" />
