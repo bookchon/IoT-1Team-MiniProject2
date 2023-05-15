@@ -10,6 +10,8 @@
         mc:Ignorable="d"
         Height="450" Width="800" Title=""
                  Loaded="MetroWindow_Loaded">
+    
+    <!-- 여기서부터 복사 -->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -155,4 +157,6 @@
         </lvc:Gauge>
 
     </Grid>
+
+    <!-- 여기까지 -->
 </mah:MetroWindow>
