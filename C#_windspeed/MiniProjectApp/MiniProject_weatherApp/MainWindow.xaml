@@ -38,7 +38,5 @@
                Content="{Binding Ultrasrtfcst.VEC}" HorizontalAlignment="Center" />
         <Label Grid.Row="1" Grid.Column="2" x:Name="TxtRn1" FontSize="24" VerticalAlignment="Center" Margin="10,0,10,0"
                Content="{Binding Ultrasrtfcst.RN1}" HorizontalAlignment="Center"/>
-
-        
     </Grid>
 </mah:MetroWindow>

@@ -106,7 +106,6 @@ namespace MiniProject_weatherApp
                     fcst.RN1 = "-";
                 }
                 TxtRn1.Content = $"{fcst.RN1} mm";
-                
             }
         }
         
